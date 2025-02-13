@@ -12,7 +12,7 @@ function draw() {
 
   //clouds
   for(var l = 0; l < 999; l++){
-    rect((l * 10) % width,(l * 50) % height,90,10,70);
+    rect((l * 10) % width,(l * 50) % height,90,15,70);
     fill('#ffffff');
   }
 
@@ -47,14 +47,14 @@ function draw() {
   triangle(100, 300, 500, 300, 300, 100);
 
   // right
-  translate(width / 3, height / 60);
+  translate(width / 2, height / 60);
   stroke(0);
   strokeWeight(1);
   fill("#75510b");
   triangle(100, 300, 500, 300, 300, 100);
 
   // left
-  translate(width / -1.5, height / 90);
+  translate(width / -1.6, height / 90);
   stroke(0);
   strokeWeight(1);
   fill("#75510b");
