@@ -7,12 +7,12 @@ let resetbutton;
 let originalImages = {};
 
 function preload() {
-  img1 = loadImage('mikucut/body.png');
-  img2 = loadImage('mikucut/shirt.png');
-  img3 = loadImage('mikucut/sleeve.png');
-  img4 = loadImage('mikucut/eyes.png');
-  img5 = loadImage('mikucut/one.png');
-  img6 = loadImage('mikucut/hair.png');
+  img1 = loadImage('body.png');
+  img2 = loadImage('shirt.png');
+  img3 = loadImage('sleeve.png');
+  img4 = loadImage('eyes.png');
+  img5 = loadImage('one.png');
+  img6 = loadImage('hair.png');
 
    // original images (for reset)
    originalImages.body = img1;
@@ -53,15 +53,15 @@ function onSelect() {
   let selectedOption = mySelect.value();
 
   if (selectedOption === 'hair') {
-    img6 = loadImage('mikucut/hair.png', () => imgWithHue = img6);
+    img6 = loadImage('hair.png', () => imgWithHue = img6);
   } else if (selectedOption === 'eyes') {
-    img4 = loadImage('mikucut/eyes.png', () => imgWithHue = img4);
+    img4 = loadImage('eyes.png', () => imgWithHue = img4);
   } else if (selectedOption === '01') {
-    img5 = loadImage('mikucut/one.png', () => imgWithHue = img5);
+    img5 = loadImage('one.png', () => imgWithHue = img5);
   } else if (selectedOption === 'sleeve') {
-    img3 = loadImage('mikucut/sleeve.png', () => imgWithHue = img3);
+    img3 = loadImage('sleeve.png', () => imgWithHue = img3);
   } else if (selectedOption === 'shirt') {
-    img2 = loadImage('mikucut/shirt.png', () => imgWithHue = img2);
+    img2 = loadImage('shirt.png', () => imgWithHue = img2);
   }
 }
 
