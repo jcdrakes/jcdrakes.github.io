@@ -1,0 +1,11 @@
+* {
+    font-family:monospace
+}
+
+#title {
+    color: rgb(0, 0, 0);
+    font-size: small;
+    position: absolute;
+    margin-left: 150px;
+
+}
