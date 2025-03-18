@@ -1,0 +1,22 @@
+I created a text based game where you play as someone kidnapped by a killer, you answer riddles and unlock doors to get closer to the exit and gain your freedom. getting 15 riddles correct overall will trigger the winning scenario for finding a way out and there is also a chance of the winning scenario randomly popping up as you play the game. there are two scenarios that can kill the player and a death scenario will also be triggered if the player gets 3 riddles wrong in a row. 
+            - Jenelle Cadogan
+
+inspired by: A Dark Room by Double Speak Games !
+https://adarkroom.doublespeakgames.com/
+
+References:
+
+riddles
+ 1. https://www.goodhousekeeping.com/life/a41779999/riddles-for-adults/?utm_source=google&utm_medium=cpc&utm_campaign=mgu_ga_ghk_d_bm_prog_org_ca_a41779999&gad_source=1&gclid=Cj0KCQjwhMq-BhCFARIsAGvo0KddvSnv1XMDqdlOPqvKb4k45jRreeXtWFS-thxSqYu7cszGjPyr6WoaAj_pEALw_wcB
+2. https://parade.com/947956/parade/riddles/
+3. https://www.rd.com/article/riddles-for-adults/
+4. https://www.countryliving.com/life/entertainment/a44951115/riddles-for-adults/
+5. https://www.womansday.com/life/entertainment/a39225370/riddles-for-adults/
+
+popup tutorial: https://youtu.be/AF6vGYIyV8M?si=Qr_AcYXZga9hqLFT
+
+css 
+https://developer.mozilla.org/en-US/docs/Web/CSS
+
+html 
+https://www.w3schools.com/html/html_id.asp

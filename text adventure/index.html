@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="UFT-8">
+        <title>
+        Text Adventure
+        </title>
+        <script src="p5.min.js"></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        z<!--title/navbar-->
+            <nav class="navbar">
+                <div class="navbar_container">
+                    <p class="title">The maze</p>
+                </div>
+            </nav>
+        
+            <!--starting popup-->
+            <div id="popup" class="popup">
+                <p> You wake up in a dark room unable to remember how you got there. As you slowly push yourself off the ground, you notice a door in front of you, guarded with a passcode lock. Next to the door, you are barely able to make out a note that says, “Answer the riddles to find your way out of the maze and I will let you escape."</p>
+                <button class="btn" onclick="startGame()">Start</button>
+                <footer id="footer">Inspired by: 'A Dark Room' by Double Speaks Games</footer>
+            </div>
+    
+        
+            <!--riddles-->
+            <div id="riddleContainer">
+                <p id="riddle">Click the button to get a riddle!</p>
+                <input type="text" id="answerInput" placeholder="Type your answer here" />
+                <div><button class="Button" >Check Answer</button></div>
+            <!--message container-->
+                <div id="messageContainer">
+                <p id="responseMessage" class="message"></p>
+                <p id="systemMessage" class="systemMessage"></p>
+                </div>
+            </div>
+
+
+         <!--situational popups-->
+         <div id="situationPopup" class="newPopup" style="display:none;">
+            <p id="situationMessages"></p>
+            <button class="choiceButton" onclick="makeChoice('door')"> Go Left</button>
+            <button class="choiceButton" onclick="makeChoice('running')">Keep Running</button>
+            <button class="thirdChoiceButton" onclick="makeChoice('turn')" style="display: none;">Turn Around</button>
+            <p id="playerOutcomeMessage"></p>
+             <div id="outcomeMessage" style="display: none; padding: 10px; background-color: #f4f4f4; border: 1px solid #ccc; margin-top: 10px;"></div>
+             <button class="closeMessage" onclick="closeMessage()">Close</button></div>
+
+        <!--final question popup-->
+        <div id="finalPopup" class="newPopup" style="display:none;">
+            <p id="finalMessages"></p>
+            <button class="finalButton" onclick="finalChoice('wood')">Pry wood open</button>
+            <button class="finalButton" onclick="finalChoice('scream')">Call for help</button>
+        </div>
+
+        <!--death screen-->
+        <div id="deathScreen" class="deathScreen" style="display: block; visibility: hidden;">
+            <h2 id="gameOver">Game Over</h2>
+            <p id="deathMessage"></p>
+             <button class="exitButton" onclick="exitGame()">Try again?</button>
+        </div>
+
+        <!--win screen-->
+        <div id="winScreen" class="winScreen" style="display: block; visibility: hidden;">
+            <h2 id="congrats"> Congratulations!</h2>
+            <p id="winMessage"></p>
+            <button id="finalExitButton" class="exitButton" onclick="exitGame()">Exit</button></div>
+
+  <script>
+                // Start popup script
+let popup = document.getElementById("popup");
+let riddleContainer = document.getElementById("riddleContainer");
+let messageContainer = document.getElementById("messageContainer");
+let messageText = "";
+let messageClass = "message";
+
+// Event listeners
+
+document.addEventListener("DOMContentLoaded", function () {
+    getRandomRiddle(); // Call the function only after the DOM is ready
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const checkAnswerButton = document.querySelector(".Button");
+    if (checkAnswerButton) {
+        checkAnswerButton.addEventListener("click", checkAnswer);
+    } else {
+        console.error("Check Answer button not found in the DOM.");
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const closeButton = document.getElementById("closeButton");
+    if (closeButton) {
+        closeButton.addEventListener("click", function() {
+            console.log("Close button clicked!");
+        });
+    } else {
+        console.log("Close button not found.");
+    }
+});
+
+// functions
+function closePopup() {
+    popup.classList.add("close-popup");
+}
+
+function closeMessage() {
+    const outcomeMessage = document.getElementById("outcomeMessage");
+    const situationPopup = document.getElementById("situationPopup");
+    situationPopup.style.display = "none";
+    outcomeMessage.style.display = "none"; 
+}
+
+function startGame() {
+    closePopup();
+    riddleContainer.style.display = "block";
+    riddleContainer.style.visibility = "visible";
+    situationPopup.style.visibility = "visible";
+    getRandomRiddle();
+}
+
+function exitGame() {
+    window.location.reload();
+}
+
+function hideElements(){
+    const riddleContainer = document.getElementById("riddleContainer");
+        const situationPopup = document.getElementById("situationPopup");
+        const riddle = document.getElementById("riddle");
+        const responseMessage = document.getElementById("responseMessage");
+        const messageContainer = document.getElementById("messageContainer");
+        
+       if (riddleContainer)riddleContainer.style.display = "none";
+        if (situationPopup)situationPopup.style.visibility = "hidden";
+       if (riddle) riddle.style.display = "none";
+       if (responseMessage) responseMessage.style.display = "block";
+       if(messageContainer) messageContainer.style.display = "none";
+}
+
+function showFinalChoice() {
+    const finalPopup = document.getElementById("finalPopup");
+    const finalMessagesElement = document.getElementById("finalMessages");
+
+    const finalQuestionData = finalQuestion[0];
+    finalMessagesElement.textContent = finalQuestionData.question5;
+
+    const buttons = finalPopup.querySelectorAll(".finalButton");
+    buttons[0].textContent = finalQuestionData.options[0];
+    buttons[0].onclick = null;
+    buttons[0].addEventListener("click", () => finalChoice('wood'));
+    buttons[1].textContent = finalQuestionData.options[1];
+    buttons[1].onclick = null;
+    buttons[1].addEventListener("click", () => finalChoice('scream')); 
+
+    const situationPopup = document.getElementById("situationPopup");
+    if (situationPopup) {
+        situationPopup.style.display = "none";
+    }
+
+    finalPopup.style.display = "block";
+}
+
+function wrongAnswerDeath() {
+    hideElements();
+    const deathScreen = document.getElementById("deathScreen");
+    const deathMessage = document.getElementById("deathMessage");
+
+    if (deathMessage) {
+        deathMessage.textContent = "Door after door you’re struggling to answer any of the riddles correctly. Maybe you’re disoriented from all the running or the dark, damp hallway that never seems to end. Turning around you decide to try one of the doors you passed on the way down. Hold on. What an easy riddle..you know the answer to this! With shaky hands you carefully try to press each key. Finally! The door is unlocked! You pull the door open as fast as you can when you suddenly hear a loud slam behind you. Turning around you are face to face with a hooded man, the darkness leaving you unable to make out any of the features on his face. Fear finally starts to set in and you can’t decide if you should enter the room or run down the hallway. Weighing your options you get ready to sprint. As you lift your foot off the ground you are flung into the room with what seemed like all his might. Winded you try to get up but it’s useless. The hooded man walks over to you and and kneels over your chest. He pulls a long blade out of his coat and before you can even let out a scream, you feel warm liquid pooling around your neck, then the pain. The cut wasn’t deep enough, he’s playing with you. You start to struggle trying to get out from under him but you have no energy left. Finally he lifts the blade again and holds it over your heart. With the little light in the room you watch as the blade comes slamming down into your chest. As your heart stops all you can think is “what did I do to deserve this?”";
+    }
+    if (deathScreen) {
+        deathScreen.style.visibility = "visible";
+        deathScreen.style.display = "block";
+    }
+
+    console.log("Player killed due to 3 wrong answers.");
+}
+
+function rightAnswerReward(){
+    const situationPopup = document.getElementById("situationPopup");
+    const situationMessagesElement = document.getElementById("situationMessages");
+    const buttons = document.querySelectorAll('.choiceButton');
+
+    const rewardQuestion = 'You finally feel like you are far enough from the killer to take a break. Do you:';
+    const rewardOptions = ['Continue.', 'Rest in nearby room.'];
+    const rewardOutcomes = {
+        continue: 'You keep running when suddenly you notice your legs aren’t keeping up with the rest of your body. You fall over with a huge thud and hear a large door behind you swing open.',
+        rest: 'You quietly open the first door you see and sit on the floor. While trying to catch your breath, you notice a tiny door in the corner and decide that is your way out.'
+    };
+
+    situationMessagesElement.textContent = rewardQuestion;
+
+    buttons[0].textContent = rewardOptions[0];
+    buttons[0].onclick = () => {
+        makeChoice('Continue.');
+    };
+    buttons[0].style.display = "inline-block";
+
+    buttons[1].textContent = rewardOptions[1];
+    buttons[1].onclick = () => {
+        makeChoice('Rest in nearby room.');
+        setTimeout(() => {
+            showFinalChoice();
+        }, 5000);
+    };
+    buttons[1].style.display = "inline-block";
+
+    const thirdButton = document.querySelector('.thirdChoiceButton');
+    if (thirdButton) {
+        thirdButton.style.display = "none";
+    }
+
+    situationPopup.style.display = "block";
+}
+
+
+// Riddles database and system messages
+const riddleDatabase = [
+    { question: 'If 2 is company and 3 is a crowd, what are 4 and 5?', answer: ['9', 'nine'] },
+    { question: 'If you multiply this number by any other number, the answer will always be the same. What number is this?', answer: ['0', 'zero'] },
+    { question: 'What has hands but cannot clap?', answer: ['clock', 'a clock'] },
+    { question: 'Which fish costs the most?', answer: ['goldfish', 'a goldfish'] },
+    { question: 'The more of this there is, the less you see. What is it?', answer:  ['darkness'] },
+    { question: 'What has legs, but does not walk?', answer: ['table', 'a table', 'chair', 'a chair'] },
+    { question: 'What has words, but never speaks?', answer: ['book', 'a book'] },
+    { question: 'What goes through cities and fields, but never moves?', answer: ['road', 'a road'] },
+    { question: 'I have lakes with no water, mountains with no stone and cities with no buildings. What am I?', answer: ['map', 'a map'] },
+    { question: 'What can you catch, but not throw?', answer: ['cold', 'a cold'] },
+    { question: 'What kind of room has no doors or windows?', answer: ['mushroom', 'a mushroom'] },
+    { question: 'What has many keys but cannot open a single lock?', answer: ['piano', 'a piano'] },
+    { question: 'What has a head and a tail but no body?', answer: ['coin', 'a coin'] },
+    { question: 'What has one head, one foot, and four legs?', answer: ['a bed', 'bed'] },
+    { question: 'What starts with T, ends with T, and has T in it?', answer: ['a teapot', 'teapot'] },
+    { question: 'Poor people have it. Rich people need it. If you eat it you die. What is it?', answer: ['nothing'] },
+    { question: 'What building has the most stories?', answer: ['a library', 'library'] },
+    { question: 'What goes up but never comes down?', answer: ['age', 'your age'] },
+    { question: 'What must be broken before you can use it?', answer: ['an egg', 'egg'] },
+    { question: 'What has branches, but no fruit, trunk or leaves?', answer: ['a bank', 'bank'] },
+    { question: 'What is black when it’s clean and white when it’s dirty?', answer: ['a chalkboard', 'chalkboard'] },
+    { question: 'What begins with an "e" and only contains one letter?', answer: ['an envelope', 'envelope'] },
+    { question: 'I am easy to lift, but hard to throw. What am I?', answer: ['a feather', 'feather'] },
+    { question: ' What is full of holes but still holds water?', answer: ['sponge', 'a sponge'] }
+];
+
+const systemMessages = [
+    "Every step you take echoes in the dark.",
+    "You feel a presence behind you.",
+    "This hallway seems to be getting colder and colder.",
+    "The silence is eerie.",
+    "You wonder how long you can continue going.",
+    "You think you hear someone whisper your name.",
+    "It seems like someone is watching you.",
+    "You think you hear a door behind you slowly open."
+];
+
+//player status
+let playerSurvived = true;
+let playerDied = true;
+let playerWin = true;
+
+//track number of wrong answers
+let wrongAnswerCount = 0; 
+
+//track number of right answers
+let rightAnswerCount = 0;
+
+//store the curren riddle
+let currentRiddle = {}; 
+
+// Random riddle function
+function getRandomRiddle() {
+    const randomIndex = Math.floor(Math.random() * riddleDatabase.length);
+    currentRiddle = riddleDatabase[randomIndex];
+
+    const riddleElement = document.getElementById("riddle");
+    const responseMessageElement = document.getElementById("responseMessage");
+    const answerInputElement = document.getElementById("answerInput");
+
+    //debugging
+    console.log("riddleElement:", riddleElement);
+    console.log("responseMessageElement:", responseMessageElement);
+    console.log("answerInputElement:", answerInputElement);
+
+    if (riddleElement) {
+        riddleElement.textContent = currentRiddle.question;
+    } else {
+        console.error("Element with id 'riddle' not found.");
+    }
+
+    if (responseMessageElement) {
+        responseMessageElement.textContent = "";
+    } else {
+        console.error("Element with id 'responseMessage' not found.");
+    }
+
+    if (answerInputElement) {
+        answerInputElement.value = "";
+    } else {
+        console.error("Element with id 'answerInput' not found.");
+    }
+}
+
+// Check answers and handle messages
+function checkAnswer() {
+    const userAnswer = document.getElementById("answerInput").value.toLowerCase().trim();
+    const responseMessage = document.getElementById("responseMessage");
+    const correctAnswers = Array.isArray(currentRiddle.answer)
+        ? currentRiddle.answer.map(answer => answer.toLowerCase())
+        : [currentRiddle.answer.toLowerCase()];
+
+    let messageText = "";
+    let messageClass = "message";
+
+    if (correctAnswers.includes(userAnswer)) {
+        messageText = "You managed to lose the killer.";
+        messageClass = "message correct"; 
+        wrongAnswerCount = 0;
+        rightAnswerCount++;
+    } else {
+        messageText = "The killer is getting closer.";
+        messageClass = "message wrong";
+        wrongAnswerCount++;
+    }
+
+    //wrong answer death
+    if (wrongAnswerCount >= 3) {
+        wrongAnswerDeath(); 
+        return;
+    }
+
+    //right answer popup
+    if (rightAnswerCount >= 15) {
+        rightAnswerReward();
+        return;
+    }
+
+    // Add the response message to the message container
+    addMessage(messageText, messageClass);
+
+    document.getElementById("answerInput").value = "";
+
+    // riddle delay
+    setTimeout(() => {
+        getRandomRiddle();
+    }, 1000);
+}
+
+//add a new message to messsage container
+function addMessage(messageText, messageClass) {
+    const messageContainer = document.getElementById("messageContainer");
+
+    //new message element
+    let messageElement = document.createElement("p");
+    messageElement.className = messageClass;
+    messageElement.textContent = messageText;
+
+    messageContainer.appendChild(messageElement);
+
+    //limits # of messages
+    let allMessages = messageContainer.getElementsByTagName("p");
+    if (allMessages.length > 6) {
+        messageContainer.removeChild(allMessages[0]); // Remove the oldest message
+    }
+}
+
+// show system message every 25 seconds
+function showSystemMessage() {
+    const randomSystemMessage = systemMessages[Math.floor(Math.random() * systemMessages.length)];
+    addMessage(randomSystemMessage, "systemMessage");
+}
+
+setInterval(showSystemMessage, 25000);
+
+document.querySelector(".Button").addEventListener("click", checkAnswer);
+
+ </script>
+<!--situational popups script-->
+<script>
+
+const textMessages = {
+    doorDeath: "You were killed in a fiery blaze.",
+    runningSurvive: "You seem to have lost the killer.",
+    turnSurvive: "It seems the killer is getting closer.",
+    ignoreSurvive: "Speeding up, it seems you have lost the killer.",
+    continueSurvive: "The killer is extremly close.",
+    restSurvive: "You seem to be getting closer to escaping.",
+    towardsDeath: "You die in the killers strangely warm embrace.",
+    nextSurvive: "You seem to be getting closer to escaping.",
+    aroundSurvive: "You seem to have lost the killer."
+};
+
+const situationMessages = [
+{ //1
+question: 'You feel a cool breeze coming from a door to your left. Do you:', 
+options: ['Open the door.', 'Keep running.'],
+outcomes: {
+    door: 'You open the door, and a blinding light overcomes all of your senses. Suddenly, everything feels hot. Was this a trap? Of course it was. You can feel your eyelashes and eyebrows starting to burn, then your clothes catch aflame. As you try to scream, your lungs fill with smoke. This might be a death worse than what that killer was planning.', //death
+    running:'You continue to run as fast as you can. For some reason, you cannot help but feel you escaped a painful death.' // survive
+    }},
+    //2
+{question: 'Between your heavy breathing, you think you hear someone calling out to you. Do you:',
+options: ['Turn around.','Ignore it.'],
+outcomes: {
+    turn:  'you stop in your tracks and slowly turn around, it seems like it was just your imagination. As you begin to run again, a door behind you opens.', //killer catches up
+    ignore: 'You keep running and decide to ignore any sounds you hear.' //loses killer
+}},
+//3
+{question: 'You finally feel like you are far enough from the killer to take a break. Do you:',
+    options: ['Continue.','Rest in nearby room.'],
+    outcomes: {
+        continue:  'You keep running when suddenly you notice your legs arent keeping up with the rest of your body. You fall over with a huge thud and hear a large door behind you swing open.', //killer catches up
+        rest: 'You quietly open the first door you see and sit on the floor. While trying to catch your breath, you notice a tiny door in the corner and decide that is your way out.' //defining moment you win the game
+    }
+},
+//4
+{question: 'You see a bit of light coming from behind a door at the end of the hallway. Do you:',
+    options: ['Go towards it.','Enter the room next to it.', 'Turn around completely.'],
+    outcome: {
+        towards:  'As you walk towards the door, you start feeling uneasy. Grabbing onto the doorknob, you twist and pull as hard as you can to no avail. As you are about to let go, the door is forcefully flung open, taking you with it. Within seconds, you feel something sharp pierce your stomach and something wet causing your shirt to stick to your skin. Looking up, you see a hooded man shrouded in shadow, he pulls you into an embrace as everything around you fades to darkness.', //death
+        next: 'You decide the room is a trap and try heading into the one next to it. Inside is another door with another lock. You sigh as you prepare to answer another riddle. Maybe its time to give up.', // you survive and get closer to winning
+        around: 'The vibes in this hallway seem terrible, and you cannot stop shaking. You decide that turning around completely seems like the best option. Maybe checking the doors you skipped previously will take you closer to the exit?' // you lose the killer 
+    }},
+];
+
+const finalQuestion =[
+    {question5: 'After slowly crawling through the dark, wet crawlspace for what seemed like 30 minutes, you begin to hear a plethora of noise, not just any noise but the sounds of people talking, cars and dogs barking. This is it. You have made it. Now, all you need to do is get out of this stupid hole. Do you:',
+        options: ['Try to pry the wood open.','Call out for help.'],
+        outcome: {
+            wood:  'Thinking staying as quiet as possible is better, you try to pry the wood open with your bare hands. Covered in splinters, you do not give up, you cannot, not when you are this close to being free, to getting out of this nightmare of a situation you were placed in. You do not deserve to die like this. Full of emotion, you begin kicking the wood as hard as you can, and it slowly starts to snap. Finally, the hole is big enough for you to crawl out of. You did it. You escaped. As you lay on the ground in front of the hole, a few minutes later bystanders start to pass by. You begin to sob as you hear someone calling the police. A kind woman approaches you and helps you stand up. You are saved.', // you win
+            scream: 'Feeling a rush of adrenaline, you begin to scream, you scream as loud as you can, begging for someone to help you. You continue to crawl towards the wood and get ready to pry it open when suddenly, you feel something tug on your leg. Your pants probably got caught on something. Don’t think about it; you are almost free. The tugging gets stronger and more frequent as you try to move forward. Stopping in your tracks, you slowly turn your head and tilt your head up. Behind you is a hooded man dressed head to toe in black. You try to kick him, but it’s too late. Glancing at his hand, you notice a large axe. He swings it up, and it lands in your right calf. You are not going anywhere. As you scream in pain, he begins to drag you backwards. Back to the tiny door you escaped from. Grabbing onto anything you can, trying to stop his movement, you see the light from the outside world slowly fading, the sounds of life getting further and further. I guess you should not have gotten your hopes up.'//death
+        }
+    }
+];
+
+function showSituationPopup() {
+    const situationPopup = document.getElementById("situationPopup");
+    const situationMessagesElement = document.getElementById("situationMessages");
+    const buttons = document.querySelectorAll('.choiceButton');
+    const thirdButton = document.querySelector('.thirdChoiceButton');
+
+    buttons.forEach(button => {
+        button.style.display = "none";
+        button.textContent = "";
+    });
+
+    if (thirdButton) {
+        thirdButton.style.display = "none";
+        thirdButton.textContent = "";
+    }
+
+    const randomSituation = situationMessages[Math.floor(Math.random() * situationMessages.length)];
+
+    console.log("Random Situation:", randomSituation);
+
+    situationMessagesElement.textContent = randomSituation.question;
+
+    if (randomSituation.options && randomSituation.options.length > 0) {
+        console.log("Options for situation:", randomSituation.options);
+        buttons[0].textContent = randomSituation.options[0]; 
+        buttons[1].textContent = randomSituation.options[1];
+
+        buttons[0].setAttribute("onclick", `makeChoice('${randomSituation.options[0]}')`);
+        buttons[1].setAttribute("onclick", `makeChoice('${randomSituation.options[1]}')`);
+
+        buttons[0].style.display = "inline-block"; 
+        buttons[1].style.display = "inline-block"; 
+         if (randomSituation.options.length === 3 && thirdButton) {   //for setting up third button
+            thirdButton.textContent = randomSituation.options[2];
+            thirdButton.setAttribute("onclick", `makeChoice('${randomSituation.options[2]}')`);
+            thirdButton.style.display = "inline-block";
+         }
+    }
+
+    situationPopup.style.display = "block";
+}
+
+// function to handle the choice and display the outcome
+const outcomes = {
+    'Open the door.': "You open the door, and a blinding light overcomes all of your senses. Suddenly, everything feels hot. Was this a trap? Of course it was. You can feel your eyelashes and eyebrows starting to burn, then your clothes catch aflame. As you try to scream, your lungs fill with smoke. This might be a death worse than what that killer was planning.",
+    'Keep running.':'You continue to run as fast as you can. For some reason, you cannot help but feel you escaped a painful death.',
+    'Turn around.':  'you stop in your tracks and slowly turn around, it seems like it was just your imagination. As you begin to run again, a door behind you opens.',
+   'Ignore it.': 'You keep running and decide to ignore any sounds you hear.',
+    'Continue.':  'You keep running when suddenly you notice your legs arent keeping up with the rest of your body. You fall over with a huge thud and hear a large door behind you swing open.',
+   'Rest in nearby room.': 'You quietly open the first door you see and sit on the floor. While trying to catch your breath, you notice a tiny door in the corner and decide that is your way out.',
+   'Go towards it.':  'As you walk towards the door, you start feeling uneasy. Grabbing onto the doorknob, you twist and pull as hard as you can to no avail. As you are about to let go, the door is forcefully flung open, taking you with it. Within seconds, you feel something sharp pierce your stomach and something wet causing your shirt to stick to your skin. Looking up, you see a hooded man shrouded in shadow, he pulls you into an embrace as everything around you fades to darkness.',
+   'Enter the room next to it.': 'You decide the room is a trap and try heading into the one next to it. Inside is another door with another lock. You sigh as you prepare to answer another riddle. Maybe its time to give up.',
+    'Turn around completely.': 'The vibes in this hallway seem terrible, and you cannot stop shaking. You decide that turning around completely seems like the best option. Maybe checking the doors you skipped previously will take you closer to the exit?',
+    'wood':'Thinking staying as quiet as possible is better, you try to pry the wood open with your bare hands. Covered in splinters, you do not give up, you cannot, not when you are this close to being free, to getting out of this nightmare of a situation you were placed in. You do not deserve to die like this. Full of emotion, you begin kicking the wood as hard as you can, and it slowly starts to snap. Finally, the hole is big enough for you to crawl out of. You did it. You escaped. As you lay on the ground in front of the hole, a few minutes later bystanders start to pass by. You begin to sob as you hear someone calling the police. A kind woman approaches you and helps you stand up. You are saved.',
+    'scream': 'Feeling a rush of adrenaline, you begin to scream, you scream as loud as you can, begging for someone to help you. You continue to crawl towards the wood and get ready to pry it open when suddenly, you feel something tug on your leg. Your pants probably got caught on something. Don’t think about it; you are almost free. The tugging gets stronger and more frequent as you try to move forward. Stopping in your tracks, you slowly turn your head and tilt your head up. Behind you is a hooded man dressed head to toe in black. You try to kick him, but it’s too late. Glancing at his hand, you notice a large axe. He swings it up, and it lands in your right calf. You are not going anywhere. As you scream in pain, he begins to drag you backwards. Back to the tiny door you escaped from. Grabbing onto anything you can, trying to stop his movement, you see the light from the outside world slowly fading, the sounds of life getting further and further. I guess you should not have gotten your hopes up.'
+};
+console.log("showSituationPopup called")
+setInterval(showSituationPopup, 35000); //35 seconds between popups
+
+
+function makeChoice(choice) {
+    console.log(`Choice clicked: ${choice}`);
+    const outcomeText = outcomes[choice];
+     let messageText = "";
+
+     //setting otucome messages
+     if (outcomeText) {
+        const outcomeElement = document.getElementById("outcomeMessage");
+        if (outcomeElement) {
+            outcomeElement.textContent = outcomeText;
+            outcomeElement.style.display = "block";
+        }
+    } else {
+        console.error(`Outcome not found for choice: ${choice}`);
+    }
+
+    // Setting messages based on choices
+    if (choice === 'Open the door.') {
+        playerSurvived = false;
+        playerDied = true;
+        messageText = textMessages.doorDeath;
+    } else if (choice === 'Keep running.') {
+        playerSurvived = true;
+        playerDied = false;
+        messageText = textMessages.runningSurvive;
+    }
+
+    // For question 2
+    if (choice ===  'Turn around.') {
+        playerSurvived = true;
+        playerDied = false;
+        messageText = textMessages.turnSurvive;
+    } else if (choice ===  'Ignore it.') {
+        playerSurvived = true;
+        playerDied = false;
+        messageText = textMessages.ignoreSurvive;
+    }
+
+    // For question 3
+    if (choice === 'Continue.') {
+        playerSurvived = true;
+        playerDied = false;
+        messageText = textMessages.continueSurvive;
+    } else if (choice === 'Rest in nearby room.') {
+        playerSurvived = true;
+        playerDied = false;
+        messageText = textMessages.restSurvive;
+        setTimeout(() => {
+            showFinalChoice();
+        }, 40000); //
+    }
+
+    // For question 4
+    if (choice ===  'Go towards it.') {
+        playerSurvived = false;
+        playerDied = true;
+        messageText = textMessages.towardsDeath;
+    } else if (choice ===  'Enter the room next to it.') {
+        playerSurvived = true;
+        playerDied = false;
+        messageText = textMessages.nextSurvive;
+    } else if (choice === 'Turn around completely.') {
+        playerSurvived = true;
+        playerDied = false;
+        messageText = textMessages.aroundSurvive;
+    }
+
+    if (choice === 'Rest in nearby room.') {
+        playerSurvived = true;
+        playerDied = false;
+        messageText = textMessages.restSurvive;
+    }
+
+     // death outcome
+     if (playerDied) {
+        hideElements();
+        const deathScreen = document.getElementById("deathScreen");
+        const deathMessage = document.getElementById("deathMessage");
+        const retryButton = document.getElementById("retryButton");
+        const exitButton = document.getElementById("exitButton");
+    
+        deathMessage.textContent = outcomeText;
+       if(deathScreen) deathScreen.style.visibility = "visible";
+       if(deathMessage) deathMessage.style.visibility = "visible";
+       if(retryButton) retryButton.style.visibility = "visible";
+       if(exitButton) exitButton.style.visibility = "visible";
+        
+        return;
+    }
+
+
+    // adding outcome messages to system messages
+    addMessage(messageText, "textMessage");  // adds text message to the container
+    const systemMessageContainer = document.getElementById("systemMessage");
+}
+
+ //final choice and outcome
+ function finalChoice(choice) {
+    console.log(`Final choice clicked: ${choice}`);
+    const outcomeText = outcomes[choice];
+    let messageText = "";
+
+    if (choice === 'wood') {
+        playerSurvived = true;
+        playerWin = true
+        playerDied = false;
+        messageText = outcomes.wood;
+    } else if (choice === 'scream') {
+        playerSurvived = false;
+        playerDied = true;
+        playerWin = false;
+        messageText = outcomes.scream;
+    }
+
+    if (playerDied) {
+        hideElements();
+        const deathScreen = document.getElementById("deathScreen");
+        const deathMessage = document.getElementById("deathMessage");
+        const retryButton = document.getElementById("retryButton");
+        const exitButton = document.getElementById("exitButton");
+    
+        deathMessage.textContent = outcomeText;
+       if(deathScreen) deathScreen.style.visibility = "visible";
+       if(deathMessage) deathMessage.style.visibility = "visible";
+       if(retryButton) retryButton.style.visibility = "visible";
+       if(exitButton) exitButton.style.visibility = "visible";
+        
+        return;
+    }
+
+    if (playerWin) {
+        hideElements();
+        const winScreen = document.getElementById("winScreen");
+        const winMessage = document.getElementById("winMessage");
+        const finalExitButton = document.getElementById("finalExitButton");
+    
+        winMessage.textContent = outcomeText;
+        if(winScreen) winScreen.style.visibility = "visible";
+        if(winScreen) winScreen.style.display = "block";
+        if(winMessage) winMessage.style.visibility = "visible";
+        if(finalExitButton) finalExitButton.style.visibility = "visible";
+        
+        return;
+    }
+}
+</script>
+        </body>
+</body>
+</html>
+    </body>
+</html>
