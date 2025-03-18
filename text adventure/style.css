@@ -11,15 +11,10 @@
     color:aliceblue;
     font-size: 50px;
     text-align: center;
+    position: relative;
+    background-color: rgb(22, 22, 22);
 }
 
-.startingPage{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
 /* for starting popup */
 .popup{
     width: 600px;
@@ -104,7 +99,7 @@
 
 #riddle{
     color: aliceblue;
-    text-align: center;
+    text-align: left;
     font-size: large;
 }
 
@@ -114,8 +109,8 @@
     color: aliceblue;
     position: absolute;
     width: 450px;
-    height: 300px;
-    max-height: 300px;
+    height: 400px;
+    max-height: 400px;
     margin: 30px auto;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.5);
