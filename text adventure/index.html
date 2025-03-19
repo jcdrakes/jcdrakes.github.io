@@ -45,7 +45,7 @@
             <button class="thirdChoiceButton" onclick="makeChoice('turn')" style="display: none;">Turn Around</button>
             <p id="playerOutcomeMessage"></p>
              <div id="outcomeMessage" style="display: none; padding: 10px; background-color: #f4f4f4; border: 1px solid #ccc; margin-top: 10px;"></div>
-             <button class="closeMessage" onclick="closeMessage()">Close</button></div>
+             <button id="closeButton" class="closeMessage" onclick="closeMessage()">Close</button></div>
 
         <!--final question popup-->
         <div id="finalPopup" class="newPopup" style="display:none;">
@@ -371,7 +371,7 @@ function showSystemMessage() {
     addMessage(randomSystemMessage, "systemMessage");
 }
 
-setInterval(showSystemMessage, 25000);
+setInterval(showSystemMessage, 40000);
 
 document.querySelector(".Button").addEventListener("click", checkAnswer);
 
@@ -491,7 +491,7 @@ const outcomes = {
     'scream': 'Feeling a rush of adrenaline, you begin to scream, you scream as loud as you can, begging for someone to help you. You continue to crawl towards the wood and get ready to pry it open when suddenly, you feel something tug on your leg. Your pants probably got caught on something. Don’t think about it; you are almost free. The tugging gets stronger and more frequent as you try to move forward. Stopping in your tracks, you slowly turn your head and tilt your head up. Behind you is a hooded man dressed head to toe in black. You try to kick him, but it’s too late. Glancing at his hand, you notice a large axe. He swings it up, and it lands in your right calf. You are not going anywhere. As you scream in pain, he begins to drag you backwards. Back to the tiny door you escaped from. Grabbing onto anything you can, trying to stop his movement, you see the light from the outside world slowly fading, the sounds of life getting further and further. I guess you should not have gotten your hopes up.'
 };
 console.log("showSituationPopup called")
-setInterval(showSituationPopup, 35000); //35 seconds between popups
+setInterval(showSituationPopup, 60000); // 60s interval
 
 
 function makeChoice(choice) {
@@ -508,6 +508,11 @@ function makeChoice(choice) {
         }
     } else {
         console.error(`Outcome not found for choice: ${choice}`);
+    }
+
+    const closeButton = document.getElementById("closeButton");
+    if (closeButton) {
+        closeButton.style.display = "inline-block";
     }
 
     // Setting messages based on choices
@@ -543,7 +548,7 @@ function makeChoice(choice) {
         messageText = textMessages.restSurvive;
         setTimeout(() => {
             showFinalChoice();
-        }, 25000); //
+        }, 30000); // 30s delay
     }
 
     // For question 4
