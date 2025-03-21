@@ -166,6 +166,7 @@ class Balloon {
 /*refs
 https://p5js.org/reference/p5/push/
 https://p5js.org/examples/classes-and-objects-snowflakes/
+https://archive.p5js.org/examples/simulate-particles.html
 https://p5js.org/reference/p5/class/
 https://p5js.org/reference/p5/stroke/
 */
