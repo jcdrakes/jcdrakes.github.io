@@ -239,12 +239,12 @@
 #deathScreen{
     display: none;
     visibility: hidden;
-    height: 70%;
+    height: 100%;
     width: 90%;
     background-color: black;
     border-radius: none;
     position: fixed;
-    top: 20%;
+    top: 15%;
     left: 50%;
     transform:translate(-50%);
     text-align: center;
@@ -274,7 +274,7 @@
     background-color: black;
     border-radius: none;
     position: fixed;
-    top: 20%;
+    top: 15%;
     left: 50%;
     transform:translate(-50%);
     text-align: center;
@@ -313,12 +313,13 @@
 .retryButton{
     background-color: grey;
     color: white;
-    padding: 10px 20px;
     margin: 10px;
     font-size: 16px;
     border: none;
     cursor: pointer;
     display: inline;
+    position: fixed;
+    top: 20%;
 }
 
 .deathMessage{

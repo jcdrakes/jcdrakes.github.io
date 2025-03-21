@@ -1,4 +1,4 @@
-I created a text based game where you play as someone kidnapped by a killer, you answer riddles and unlock doors to get closer to the exit and gain your freedom. getting 15 riddles correct overall will trigger the winning scenario for finding a way out and there is also a chance of the winning scenario randomly popping up as you play the game. there are two scenarios that can kill the player and a death scenario will also be triggered if the player gets 3 riddles wrong in a row. 
+I created a text based game where you play as someone kidnapped by a killer, you answer riddles and unlock doors to get closer to the exit and gain your freedom. getting 10 riddles correct overall will trigger the winning scenario for finding a way out and there is also a chance of the winning scenario randomly popping up as you play the game. there are two scenarios that can kill the player and a death scenario will also be triggered if the player gets 3 riddles wrong in a row. 
             - Jenelle Cadogan
 
 inspired by: A Dark Room by Double Speak Games !
