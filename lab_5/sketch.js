@@ -54,7 +54,7 @@ let img1Element, img2Element, img3Element, img4Element, img5Element, img6Element
 
 function preload() {
   //load and position puppet images
-  img1Element = createImg('jo_puppet.jpg');
+  img1Element = createImg('joichi_puppet.jpg');
   img2Element = createImg('dai_puppet.jpg');
   img3Element = createImg('kazu_puppet.jpg');
   img4Element = createImg('kyo_puppet.jpg');
