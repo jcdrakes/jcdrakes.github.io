@@ -34,24 +34,3 @@ h1{
     text-align: center;
     z-index: 0;
 }
-
-audio{
-    position: fixed;
-    top:800px;
-    left: 50px;
-    z-index: 3;
-    filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
-    width: 500px;
-    height: 25px;
-}
-
-#footer{
-    position: fixed;
-    bottom: 15px;
-    left: 200px;
-    font-family: Garamond "Times New Roman", Times, serif;
-    font-size: 20px;
-    text-align: center;
-    z-index: 1;
-    height: 3em;
-}

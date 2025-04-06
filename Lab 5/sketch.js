@@ -5,62 +5,62 @@ var members = [
     colour: "Member colour: blue ",
     memberColour: "blue",
     text: "February 8 1996, Osaka, Japan",
-    image: "naniwa_files/jo.jpg"
+    image: "jo.jpg"
   },
   {
     name: "Daigo Nishihata (西畑大吾)",
     colour: "Member colour: red",
     memberColour: "red",
     text: "January 9 1997, Osaka, Japan",
-    image: "naniwa_files/daigo.jpg"
+    image: "daigo.jpg"
   },
   {
     name: "Kazuya Ohashi (大橋和也)",
     colour: "Member colour: green",
     memberColour: "green",
     text: "August 9 1997, Fukuoka, Japan",
-    image: "naniwa_files/kazuya.jpg"
+    image: "kazuya.jpg"
   },
   {
     name: "Kyohei Takahashi (高橋恭平)",
     colour: "Member colour: purple",
     memberColour: "purple",
     text: "February 28 2000, Osaka, Japan",
-    image: "naniwa_files/kyohei.jpg"
+    image: "kyohei.jpg"
   },
   {
     name: "Ryusei Onishi (大西流星)",
     colour: "Member colour: orange",
     memberColour: "orange",
     text: "August 7 2001, Hyogo, Japan",
-    image: "naniwa_files/ryusei.jpg"
+    image: "ryusei.jpg"
   },
   {
     name: "Shunsuke Michieda (道枝駿佑)",
     colour: "Member colour: pink",
     memberColour: "pink",
     text: "July 25 2002, Osaka, Japan",
-    image: "naniwa_files/micchi.jpg"
+    image: "micchi.jpg"
   },
   {
     name: "Kento Nagao (長尾謙杜)",
     colour: "Member colour: yellow",
     memberColour: "yellow",
     text: "August 15 2002, Osaka, Japan",
-    image: "naniwa_files/kento.jpg"
+    image: "kento.jpg"
   }
 ];
 let img1Element, img2Element, img3Element, img4Element, img5Element, img6Element, img7Element;
 
 function preload() {
   //load and position puppet images
-  img1Element = createImg('naniwa_files/jo_puppet.jpg');
-  img2Element = createImg('naniwa_files/dai_puppet.jpg');
-  img3Element = createImg('naniwa_files/kazu_puppet.jpg');
-  img4Element = createImg('naniwa_files/kyo_puppet.jpg');
-  img5Element = createImg('naniwa_files/ryu_puppet.jpg');
-  img6Element = createImg('naniwa_files/mich_puppet.jpg');
-  img7Element = createImg('naniwa_files/ken_puppet.jpg');
+  img1Element = createImg('jo_puppet.jpg');
+  img2Element = createImg('dai_puppet.jpg');
+  img3Element = createImg('kazu_puppet.jpg');
+  img4Element = createImg('kyo_puppet.jpg');
+  img5Element = createImg('ryu_puppet.jpg');
+  img6Element = createImg('mich_puppet.jpg');
+  img7Element = createImg('ken_puppet.jpg');
   img1Element.position(30, 260); img1Element.size(250, 250);
   img2Element.position(310, 260); img2Element.size(250, 250);
   img3Element.position(510, 270); img3Element.size(250, 250);
@@ -98,6 +98,7 @@ function displayMemberInfo(member) {
   localStorage.setItem('member', JSON.stringify(member));
   console.log('Member selected:', member.name);
 }
+
 
 function setup() {
   createCanvas(1650, 800);
