@@ -61,13 +61,13 @@ function preload() {
   img5Element = createImg('ryu_puppet.jpg');
   img6Element = createImg('mich_puppet.jpg');
   img7Element = createImg('ken_puppet.jpg');
-  img1Element.position(30, 260); img1Element.size(250, 250);
-  img2Element.position(310, 260); img2Element.size(250, 250);
-  img3Element.position(510, 270); img3Element.size(250, 250);
-  img4Element.position(760, 260); img4Element.size(250, 250);
-  img5Element.position(990, 260); img5Element.size(250, 250);
-  img6Element.position(1295, 260); img6Element.size(250, 250);
-  img7Element.position(1570, 260);  img7Element.size(250, 250);
+  img1Element.position(80, 260); img1Element.size(250, 250);
+  img2Element.position(350, 260); img2Element.size(250, 250);
+  img3Element.position(620, 270); img3Element.size(250, 250);
+  img4Element.position(900, 260); img4Element.size(250, 250);
+  img5Element.position(1200, 260); img5Element.size(250, 250);
+  img6Element.position(1500, 260); img6Element.size(250, 250);
+  img7Element.position(1800, 260);  img7Element.size(250, 250);
 }
 
 // displays member info when clicked
