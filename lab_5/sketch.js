@@ -151,11 +151,7 @@ function mousePressed() {
 
 
 /*refs
-web page where you pick a member of naniwa and get their info/a short scentence in their member colour, when you press reset you get a "welcome back" message from the member you picked previously. 
-add a clearstorage function to clear the local storage when you press the "new member" button.
-https://p5js.org/reference/p5/setItem/
-https://www.w3schools.com/html/html5_audio.asp
-https://stackoverflow.com/questions/4126708/how-to-style-html5-audio-tag
-
+https://p5js.org/reference/p5/storeItem/
+https://p5js.org/examples/loading-and-saving-data-local-storage/
 */
 
