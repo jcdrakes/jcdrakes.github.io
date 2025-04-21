@@ -236,10 +236,10 @@ monogatari.configuration ('credits', {
 
 		'day0Label': [
 			'show scene cafe with fadeout',
-			'play sound trays with volume 30',
+			'play sound trays with volume 60',
 			'e AH, I’m so sorry… I wasn’t looking at where I was going!', 
 			'show character e eri-sad class eriNormal',
-			'play music title with fadein volume 60',
+			'play music title with fadein volume 60 loop',
 			'mc  …It’s fine, I mean it was probably impossible to see over that giant pile of trays you’re holding…?',
 			' That... is a lot of trays…',
 			'show character e eri-normal class eriLeft', 'show character gg owner-speak class ownerRight', 
