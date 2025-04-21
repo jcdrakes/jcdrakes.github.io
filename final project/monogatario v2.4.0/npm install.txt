@@ -1,0 +1,36 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\Jenelle\Desktop\OCAD UNI\comp sci WINTER 2025\Final Project\pixi-vn-react-template-main\pixi-vn-react-template-main> ```bash
+ash : The term 'ash' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ ```bash
++ ~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (ash:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Jenelle\Desktop\OCAD UNI\comp sci WINTER 2025\Final Project\pixi-vn-react-template-main\pixi-vn-react-template-main> npm install
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated @mui/base@5.0.0-beta.40-1: This package has been replaced by @base-ui-components/react
+
+added 708 packages, and audited 709 packages in 53s
+
+254 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+PS C:\Users\Jenelle\Desktop\OCAD UNI\comp sci WINTER 2025\Final Project\pixi-vn-react-template-main\pixi-vn-react-template-main> ```
+`` : The term '``' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ ```
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (``:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Jenelle\Desktop\OCAD UNI\comp sci WINTER 2025\Final Project\pixi-vn-react-template-main\pixi-vn-react-template-main>

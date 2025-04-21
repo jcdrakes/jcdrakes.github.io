@@ -1,0 +1,15 @@
+pâtisserie ultime is a visual novel where you get roped into working at a french bakery that has a lot more problems than advertised!
+
+THE STORY
+You meet your two coworkers Eri and Makoto and they beg you to stay since they need the help. promising to train with them for two days you spend the first with Makoto and Second with Eri.
+You decide to come back and on your third day you are able to choose what you want to to by yourself in the cafe! 
+on the fourth day you decide who to help create their ultimate dish and all of your choices change the outcome of the final day.
+The final day includes creating the dish with your coworker of choice and seeing if you have enough points in either baking or baristaing to help them win #1. 
+
+My code: Following along with the monogatari engines documentation, my original code is in main.js, script.js, script2.js and main.css!
+I created all the art and script/storyline for the visual novel while sourcing the sound effects and music from artists on Pixabay. 
+I left most of the ui as the engines default because I wanted to focus on implementing the story to the game instead. 
+
+For the demo I have finished day0 and day 1 of my script. I would've liked to implement a function where your choices (either working in the kitchen or baristaing) affect how good you become
+at baking or making drinks which would directly affect the outcome of the final of the chapter -> by using the engines storage function.
+ (after the 4th day there is 2 routes 'makoto' and 'eri' and if you have more points towards whatever they specialize in you get a good outcome)
