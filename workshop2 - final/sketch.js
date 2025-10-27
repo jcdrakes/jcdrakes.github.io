@@ -69,17 +69,17 @@ function draw()
         }
     }
         
-        text ("How loud can you get without getting caught? ",width/2, height/9);
+        text ("How loud can you get without getting caught? ",width/4, height/9,200);
         // goal value display
         fill(150);
-        text("Time Held at Goal: " + nf(timeAtThreshold, 1, 2) + " / " + goalTime + " seconds", width/2, height/5);
+        text("Time Held at Goal: " + nf(timeAtThreshold, 1, 2) + " / " + goalTime + " seconds", width/1.8, height/5);
         
          if (showPopup) {
              fill(0, 0, 0, 500);
              rect(0, 0, width, height);
               fill(0, 255, 0);
               textSize(16);
-            text("Congratulations! You reached the goal!", width / 2, height / 2 - 30);
+            text("Congratulations! You reached the goal!", width / 1.8, height / 2 - 30);
              text("Please scan for feedback", width / 2, height / 2 - 10);
                 image(feedback, width/2 - 110, height/2 - 300,250, 250);
                 createRetryButton();
@@ -114,12 +114,12 @@ function draw()
         // Label the threshold line
         fill(255, 200, 0);
         noStroke();
-        text("Threshold ->", thresholdX - 65, height / 2,10);
+        text("Threshold ->", thresholdX - 65, height / 2,25);
         
         // Instructions
         fill(255);
         //text("Can you get to the goal without the librarian catching you?", width/9, height - 230, 350);
-        text("Instructions: Make as much noise as you can into the mic for 10 seconds without passing the threshold. ", width/4, height - 100,350);
+        text("Make as much noise as you can into the mic for 10 seconds without passing the threshold. ", width/4, height - 100,300);
     }
 
 //FUNCTIONS
