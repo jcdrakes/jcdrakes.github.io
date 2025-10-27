@@ -42,7 +42,7 @@ function setup()
 function draw() 
 {
     background(backgroundColor);
-    image(gif1, width/2 - 110, height/2 - 150, 250, 250);
+    image(gif1, width/2 - 110, height/2 - 150, 200, 200);
 
     if (window.micEnabled) 
     {
@@ -50,7 +50,7 @@ function draw()
         micLevel = mic.getLevel() * micMultiplier;
         
        if (micLevel > threshold2) {
-            image(gif3, width/2 - 110, height/2 - 150, 250, 250);
+            image(gif3, width/2 - 110, height/2 - 150, 200, 200);
             timeAtThreshold2 += deltaTime / 200;
             if (timeAtThreshold2 > failTime && !showPopup2) {
                 timeAtThreshold2 = failTime;
@@ -65,7 +65,7 @@ function draw()
             }
         } else {
             timeAtThreshold = 0;
-            image(gif1, width/2 - 110, height/2 - 150, 250, 250);
+            image(gif1, width/2 - 110, height/2 - 150,  l, 250);
         }
     }
         
