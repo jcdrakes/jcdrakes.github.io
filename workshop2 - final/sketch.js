@@ -65,7 +65,7 @@ function draw()
             }
         } else {
             timeAtThreshold = 0;
-            image(gif1, width/2 - 110, height/2 - 150,  l, 250);
+            image(gif1, width/2 - 110, height/2 - 150,  250, 250);
         }
     }
         
