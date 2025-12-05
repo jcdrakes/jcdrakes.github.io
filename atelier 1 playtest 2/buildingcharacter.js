@@ -2,7 +2,7 @@ let character;
 let idleAni;
 let awakeAni;
 
-// --- EYE SETTINGS (centered in your canvas setup) ---
+// eye parameters
 let leftEye = { x: 245, y: 400, w: 100, h: 160 };
 let rightEye = { x: 405, y: 400, w: 100, h: 160 };
 let pupilRadius = 10;
@@ -41,7 +41,7 @@ function draw() {
 
   background("white");
 
-  // Keep sprite fixed
+  // sprite position
   character.x = width / 2.03;
   character.y = height / 2.15;
 
@@ -70,7 +70,7 @@ function draw() {
     }
   }
 
-  // ---- EYES (360° tracking) ----
+  // eye tracking
   drawEye(leftEye);
   drawEye(rightEye);
 }
@@ -95,7 +95,7 @@ function getInput() {
   return { x: mouseX, y: mouseY };
 }
 
-// ---- Calculate pupil inside ellipse ----
+// pupil position
 function getPupilPosition(eye, input) {
   let dx = input.x - eye.x;
   let dy = input.y - eye.y;
@@ -117,7 +117,6 @@ function getPupilPosition(eye, input) {
   };
 }
 
-// ---- Render eyes + pupils ----
 function drawEye(eye) {
   let input = getInput();
   let pupil = getPupilPosition(eye, input);
@@ -136,7 +135,7 @@ function drawEye(eye) {
   pop();
 }
 
-// ---- ORIENTATION LOCKING ----
+// orientation overlay
 function createOrientationOverlay() {
   orientationOverlay = createDiv(`
     <div style="
