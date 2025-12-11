@@ -1,0 +1,97 @@
+let character;
+let idleAni;
+let normalAni;
+let sparkleAni;
+let stressedAni;
+let sweatAni; 
+let anrgyAni;
+let tenseAni;
+
+let drawingPath = [];
+
+let lastInteractionTime = 0;
+let idleDelay = 90 * 1000;  // 1.5 min
+
+
+function preload() {
+  idleAni = loadAni("SL_1.png", 5);
+  normalAni = loadAni("N_1.png", 6);
+  sparkleAni = loadAni("SP_1.png", 4);
+  stressedAni = loadAni("S_1.png", 3);
+  sweatAni = loadAni("SW_1.png", 3);
+  anrgyAni = loadAni("A_1.png", 6);
+  tenseAni = loadAni("T_1.png", 6);
+}
+
+function setup() {
+  createCanvas(655, 405);
+  createOrientationOverlay();
+
+  character = new Sprite(width / 2.2, height / 2.2);
+  character.scale = 0.233;
+  character.physics = "none";
+
+  character.addAni("idle", idleAni);
+  character.addAni("normal", normalAni);
+
+  character.changeAni("idle");
+  character.ani.frameDelay = 8;
+
+  lastInteractionTime = millis();
+}
+
+function draw() {
+  checkOrientation();
+
+  background("white");
+
+  // Keep sprite fixed
+  character.x = width / 2.03;
+  character.y = height / 2.15;
+
+  // Draw path
+  stroke(0);
+  strokeWeight(4);
+  noFill();
+  beginShape();
+  for (let p of drawingPath) vertex(p.x, p.y);
+  endShape();
+
+  let interacting = mouseIsPressed || touches.length > 0;
+
+  if (interacting) {
+    lastInteractionTime = millis();
+    character.changeAni("normal");
+    character.ani.frameDelay = 3;
+
+    if (isPointOnSprite(mouseX, mouseY, character)) {
+      drawingPath.push({ x: mouseX, y: mouseY });
+    }
+  } else {
+    if (millis() - lastInteractionTime > idleDelay) {
+      character.changeAni("idle");
+      character.ani.frameDelay = 12;
+    }
+  }
+}
+
+function doubleClicked() {
+  drawingPath = [];
+}
+
+// bounding box
+function isPointOnSprite(px, py, spr) {
+  return (
+    px > spr.x - spr.w / 2 &&
+    px < spr.x + spr.w / 2 &&
+    py > spr.y - spr.h / 2 &&
+    py < spr.y + spr.h / 2
+  );
+}
+
+// touch + mouse 
+function getInput() {
+  if (touches.length > 0) return { x: touches[0].x, y: touches[0].y };
+  return { x: mouseX, y: mouseY };
+}
+
